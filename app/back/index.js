@@ -1,5 +1,5 @@
 process.stdout.write("\x1B[2J\x1B[0f");
-
+require("dotenv").config();
 const cors = require("cors");
 const morgan = require("morgan");
 const express = require("express");

@@ -1,18 +1,31 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/user.model");
+const DepartmentModel = require("../models/department.model");
 
-async function signup(req, res) {
+async function signup(req, res, next) {
   try {
+    if (res.locals.user.role !== "admin" && req.body.role !== undefined)
+      return res.status(400).send(`User not authorized`);
+
     req.body.password = bcrypt.hashSync(
       req.body.password,
       parseInt(process.env.SALTROUNDS)
     );
 
     const user = await UserModel.create(req.body);
-    const token = jwt.sign({ email: user.email }, process.env.SECRET, {
-      expiresIn: "30d",
-    });
+
+    if (user.role === "officer") {
+      const department = await DepartmentModel.findById(req.body.department);
+      if (department) {
+        department.officers.push(user);
+        await department.save();
+      } else {
+        return res.status(500).send("Invalid department");
+      }
+    }
+
+    const token = jwt.sign({ email: user.email }, process.env.SECRET);
 
     res.status(200).json({ token });
   } catch (err) {

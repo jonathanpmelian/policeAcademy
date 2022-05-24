@@ -3,7 +3,7 @@ const UserModel = require("../models/user.model");
 async function viewMyProfile(req, res) {
   try {
     const user = await UserModel.findById(res.locals.user.id).select(
-      "-__v -bikes -password"
+      "-__v -thefts -password"
     );
 
     res.status(200).json(user);

@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema({
   caseAssigned: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "theft",
+    unique: true,
   },
   department: {
     type: mongoose.Schema.Types.ObjectId,

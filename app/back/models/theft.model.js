@@ -28,7 +28,7 @@ const theftSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "assigned", "closed"],
+    enum: ["pending", "assigned", "solved"],
     required: true,
     default: "pending",
   },

@@ -22,6 +22,20 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: "user",
   },
+  bikes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "bike",
+    },
+  ],
+  caseAssigned: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "bike",
+  },
+  department: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "department",
+  },
 });
 
 const UserModel = mongoose.model("user", userSchema);

@@ -8,7 +8,7 @@ const departmentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
-  officer: [
+  officers: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",

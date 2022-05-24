@@ -22,15 +22,15 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: "user",
   },
-  bikes: [
+  thefts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "bike",
+      ref: "theft",
     },
   ],
   caseAssigned: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "bike",
+    ref: "theft",
   },
   department: {
     type: mongoose.Schema.Types.ObjectId,

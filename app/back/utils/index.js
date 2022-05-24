@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/user.model");
 
-async function checkAuth(req, res) {
+async function checkAuth(req, res, next) {
   try {
     if (!req.headers.token) return res.status(500).send("User not logged in");
     jwt.verify(req.headers.token, process.env.SECRET, async (err, decoded) => {
@@ -20,3 +20,5 @@ async function checkAuth(req, res) {
     res.status(500).send(`Error authorizing user: ${err}`);
   }
 }
+
+module.exports = { checkAuth };

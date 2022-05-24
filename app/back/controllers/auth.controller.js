@@ -4,7 +4,7 @@ const UserModel = require("../models/user.model");
 
 async function signup(req, res) {
   try {
-    req.body.password = bcryp.hashSync(
+    req.body.password = bcrypt.hashSync(
       req.body.password,
       parseInt(process.env.SALTROUNDS)
     );

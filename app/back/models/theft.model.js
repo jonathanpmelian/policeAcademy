@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 
-const bikeSchema = new mongoose.Schema({
+const theftSchema = new mongoose.Schema({
   licenseNumber: {
     type: String,
     required: true,
+    unique: true,
   },
   color: {
     type: String,
@@ -14,6 +15,7 @@ const bikeSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
+    required: true,
   },
   date: {
     type: Date,
@@ -32,5 +34,5 @@ const bikeSchema = new mongoose.Schema({
   },
 });
 
-const BikeModel = mongoose.model("bike", bikeSchema);
-module.exports = BikeModel;
+const TheftModel = mongoose.model("theft", theftSchema);
+module.exports = TheftModel;

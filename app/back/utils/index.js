@@ -54,4 +54,12 @@ async function checkDirector(req, res, next) {
   }
 }
 
-module.exports = { check, checkAuth, checkAdmin, checkDirector };
+async function checkOfficer(req, res, next) {
+  if (res.locals.user.role !== "officer")
+    return res.status(500).send(`User not Authorized`);
+  else {
+    next();
+  }
+}
+
+module.exports = { check, checkAuth, checkAdmin, checkDirector, checkOfficer };

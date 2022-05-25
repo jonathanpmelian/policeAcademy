@@ -31,11 +31,12 @@ const userSchema = new mongoose.Schema({
   caseAssigned: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "theft",
-    unique: true,
+    default: null,
   },
   department: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "department",
+    default: null,
   },
 });
 

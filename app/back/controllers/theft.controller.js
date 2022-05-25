@@ -1,7 +1,7 @@
 const TheftModel = require("../models/theft.model");
 const UserModel = require("../models/user.model");
 
-async function addTheft(req, res) {
+async function addTheft(req, res, next) {
   try {
     req.body.owner = res.locals.user.id;
     const stolenProduct = await TheftModel.create(req.body);
@@ -10,7 +10,8 @@ async function addTheft(req, res) {
     user.thefts.push(stolenProduct);
     await user.save();
 
-    res.status(200).json(stolenProduct);
+    res.locals.stolenProduct = stolenProduct;
+    next();
   } catch (err) {
     console.log(err);
     res.status(500).send(`Error adding new theft: ${err}`);

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { checkAuth, checkAdmin, checkDirector } = require("../utils/index");
+const { checkAuth, checkDirector } = require("../utils/index");
 const { addDepartment } = require("../controllers/department.controller");
 
 router.post("/", checkAuth, checkDirector, addDepartment);

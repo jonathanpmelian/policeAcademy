@@ -8,9 +8,11 @@ async function addTheft(req, res, next) {
 
     const user = await UserModel.findById(res.locals.user.id);
     user.thefts.push(stolenProduct);
-    await user.save();
 
     res.locals.stolenProduct = stolenProduct;
+
+    await user.save();
+
     next();
   } catch (err) {
     console.log(err);
@@ -25,11 +27,20 @@ async function getAllThefts(req, res) {
         path: "thefts",
         select: ["-owner", "-__v"],
       });
-
       return res.status(200).json(user.thefts);
     }
 
-    const thefts = await TheftModel.find();
+    const thefts = await TheftModel.find(req.query)
+      .populate({
+        path: "owner",
+        select: "name surname",
+      })
+      .populate({
+        path: "assignation",
+        select: "department",
+        populate: { path: "department", select: "name" },
+      })
+      .select("-__v");
 
     res.status(200).json(thefts);
   } catch (err) {
@@ -60,4 +71,20 @@ async function getOneTheft(req, res) {
   }
 }
 
-module.exports = { addTheft, getAllThefts, getOneTheft };
+async function theftResolved(req, res, next) {
+  try {
+    const theft = await TheftModel.findById(req.params.theftId);
+    theft.status = "solved";
+    res.locals.user.caseAssigned = null;
+
+    await theft.save();
+    await res.locals.user.save();
+
+    next();
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(`Error marking theft as resolved: ${err}`);
+  }
+}
+
+module.exports = { addTheft, getAllThefts, getOneTheft, theftResolved };

@@ -1,15 +1,17 @@
 const router = require("express").Router();
 
-const { checkAuth } = require("../utils/index");
+const { checkAuth, checkOfficer } = require("../utils/index");
 const {
   addTheft,
   getAllThefts,
   getOneTheft,
+  theftResolved,
 } = require("../controllers/theft.controller");
-const { assignTheft, assignOfficer } = require("../utils/assignment");
+const { assignOfficer, assignTheft } = require("../utils/assignment");
 
 router.post("/", checkAuth, addTheft, assignOfficer);
 router.get("/", checkAuth, getAllThefts);
 router.get("/:theftId", checkAuth, getOneTheft);
+router.put("/:theftId", checkAuth, checkOfficer, theftResolved, assignTheft);
 
 module.exports = router;

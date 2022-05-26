@@ -1,10 +1,23 @@
+const TheftModel = require("../models/theft.model");
 const UserModel = require("../models/user.model");
 
 async function assignTheft(req, res) {
   try {
+    const theft = await TheftModel.findOne({ status: "pending" });
+    const officer = res.locals.officer || res.locals.user;
+
+    if (theft) {
+      theft.status = "assigned";
+      theft.assignation = officer.id;
+      officer.caseAssigned = theft.id;
+      await officer.save();
+      await theft.save();
+    }
+
+    res.status(200).json(officer);
   } catch (err) {
     console.log(err);
-    res.status(500).send(`Error assigning officer: ${err}`);
+    res.status(500).send(`Error assigning Theft: ${err}`);
   }
 }
 
@@ -18,6 +31,7 @@ async function assignOfficer(req, res) {
     if (officer) {
       officer.caseAssigned = res.locals.stolenProduct.id;
       res.locals.stolenProduct.status = "assigned";
+      res.locals.stolenProduct.assignation = officer.id;
       await officer.save();
       await res.locals.stolenProduct.save();
     }
@@ -25,7 +39,7 @@ async function assignOfficer(req, res) {
     res.status(200).json(res.locals.stolenProduct);
   } catch (err) {
     console.log(err);
-    res.status(500).send(`Error assigning case: ${err}`);
+    res.status(500).send(`Error assigning Officer: ${err}`);
   }
 }
 

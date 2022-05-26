@@ -1,8 +1,10 @@
 # policeAcademy
-## Role Access
-**User:** A user is able to add a theft bike and view the status of their thefts declaration. </br>
-**Officer:** An officer owns to a department and manage just one theft case at a time. An officer is able to change the status of a theft when is done. Theft assigment is automatized. An officer is also able to search thefts by different parameters.</br>
-**Director:** A director owns to a department. A director have access to the information related with the deparment.</br>
+## Data Model
+<img width="511" alt="image" src="https://user-images.githubusercontent.com/89730979/170578788-c632d25c-3fad-476d-9d46-4ef7a0dcf48d.png"></br>
+## Role Access </br>
+**User:** A user is able to add a theft and view the status of their thefts declarations. </br></br>
+**Officer:** An officer owns to a department and manage just one theft case at a time. He is able to mark a theft as resolved and can search thefts filtering by different parameters.</br></br>
+**Director:** A director owns to a department. He can register new officers to his department and have access to the information related with it.</br></br>
 **Admin:** An admin is able to register roles different to default user.
 ## API Endpoints
 

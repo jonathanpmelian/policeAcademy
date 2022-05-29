@@ -17,6 +17,6 @@ export default {
 <style lang="scss" scoped>
 .back {
   background-color: black;
-  color: white;
+  color: gray;
 }
 </style>

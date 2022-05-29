@@ -3,12 +3,15 @@ require("dotenv").config();
 const cors = require("cors");
 const morgan = require("morgan");
 const express = require("express");
+const { NODE_ENV } = process.env;
 const mongoose = require("mongoose");
 
-(async function () {
+module.exports = (async function () {
   try {
     await mongoose.connect(
-      process.env.MONGO_URL || "mongodb://localhost:27017/",
+      NODE_ENV === "test"
+        ? "mongodb://localhost:27017/"
+        : process.env.MONGO_URL,
       {
         dbName: process.env.MONGO_DB || "policeAcademy",
       }
@@ -26,7 +29,7 @@ const mongoose = require("mongoose");
       .use("/api", require("./routes/index"));
 
     const PORT = process.env.PORT || 8080;
-    app.listen(PORT, (err) => {
+    const server = app.listen(PORT, (err) => {
       if (err) {
         console.log(err);
       }
@@ -35,6 +38,7 @@ const mongoose = require("mongoose");
       console.info(`📡  PORT: http://localhost:${PORT}`);
       console.info(">".repeat(40) + "\n");
     });
+    return { app, server };
   } catch (err) {
     console.log(err);
   }

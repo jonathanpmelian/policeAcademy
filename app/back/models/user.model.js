@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "Name is required"],
     validate: {
       validator: function (v) {
-        return /\b([A-ZÀ-ÿ][-,a-z. '\\ ]{2,13})/.test(v);
+        return /\b([A-ZÀ-ÿ][-,a-z. '\\ ]{1,13})/.test(v);
       },
       message:
         "Name should be between 2 and 13 characters. First letter uppercase.",

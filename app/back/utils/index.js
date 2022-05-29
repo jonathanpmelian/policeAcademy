@@ -62,4 +62,16 @@ async function checkOfficer(req, res, next) {
   }
 }
 
-module.exports = { check, checkAuth, checkAdmin, checkDirector, checkOfficer };
+function palindrome(string) {
+  if (string === undefined) return undefined;
+  return string.split("").reverse().join("");
+}
+
+module.exports = {
+  check,
+  checkAuth,
+  checkAdmin,
+  checkDirector,
+  checkOfficer,
+  palindrome,
+};

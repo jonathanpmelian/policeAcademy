@@ -16,7 +16,7 @@ const theftSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: function (v) {
-        return /\b([A-ZÀ-ÿ][-,a-z. '\\ ]{3,13})/.test(v);
+        return /\b([A-ZÀ-ÿ][-,a-z. '\\ ]{2,13})/.test(v);
       },
       message:
         "Color should be between 3 and 13 characters. First letter uppercase.",

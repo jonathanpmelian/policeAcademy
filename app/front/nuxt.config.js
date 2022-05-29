@@ -3,8 +3,8 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - front',
-    title: 'front',
+    titleTemplate: '%s',
+    title: 'policeAcademy',
     htmlAttrs: {
       lang: 'en',
     },
@@ -38,17 +38,51 @@ export default {
     '@nuxtjs/axios',
   ],
 
+  auth: {
+    redirect: {
+      login: '/',
+      home: '/home',
+      logout: '/',
+    },
+    strategies: {
+      local: {
+        token: {
+          name: 'token',
+          type: '',
+          property: 'token',
+          global: true,
+        },
+        user: {
+          property: false,
+          autoFetch: true,
+        },
+        endpoints: {
+          login: {
+            url: '/api/auth/login',
+            method: 'post',
+            propertyName: 'token',
+          },
+          user: {
+            url: '/api/user',
+            method: 'get',
+          },
+          logout: false,
+        },
+      },
+    },
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: process.env.apiURL,
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,

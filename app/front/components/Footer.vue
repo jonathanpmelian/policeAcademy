@@ -1,5 +1,5 @@
 <template>
-  <v-footer app>
+  <v-footer app class="back">
     <v-row>
       <v-col align="center">
         <span>&copy; PoliceAcademy {{ new Date().getFullYear() }}</span>
@@ -14,4 +14,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.back {
+  background-color: black;
+  color: white;
+}
+</style>

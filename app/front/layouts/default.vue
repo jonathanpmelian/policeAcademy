@@ -12,3 +12,9 @@ export default {
   name: 'DefaultLayout',
 }
 </script>
+
+<style lang="scss">
+.theme--light.v-application {
+  background-color: var(--v-background-base, #123859) !important;
+}
+</style>

@@ -1,39 +1,47 @@
 <template>
   <v-container>
-    <v-card>
+    <v-card flat class="cardSize">
       <v-row>
-        <v-col
+        <v-col cols="7"
           ><v-card-title>{{ data.licenseNumber }}</v-card-title></v-col
         >
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-card-text>status: {{ data.owner }}</v-card-text>
+        <v-col align-self="center" align="end" class="mr-5">
+          <v-btn class="mb-2" color="primary" text @click="showTheft"
+            >View</v-btn
+          >
         </v-col>
       </v-row>
-      <v-row>
-        <v-col>
-          <v-card-text>status: {{ data.status }}</v-card-text>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-card-text>type: {{ data.type }}</v-card-text>
-        </v-col>
-        <v-col>
-          <v-card-text>color: {{ data.color }}</v-card-text>
-        </v-col>
-      </v-row>
+      <v-divider></v-divider>
+      <v-chip
+        class="ma-2 white--text"
+        label
+        :color="
+          data.status === 'solved'
+            ? 'green'
+            : data.status === 'assigned'
+            ? 'orange'
+            : 'brown'
+        "
+        >{{ data.status }}</v-chip
+      >
     </v-card>
-    {{ data }}
   </v-container>
 </template>
 
 <script>
 export default {
-  name: 'UserTheftCard',
+  name: 'TheftCard',
   props: ['data'],
+  methods: {
+    showTheft() {
+      this.$router.replace(`/theft/${this.data._id}`)
+    },
+  },
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.cardSize {
+  width: 400px;
+}
+</style>

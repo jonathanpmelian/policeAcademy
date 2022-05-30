@@ -52,9 +52,17 @@ async function getAllThefts(req, res) {
 async function getOneTheft(req, res) {
   try {
     if (res.locals.user.role === "user") {
-      const theft = await TheftModel.findById(req.params.theftId).select(
-        "-__v -owner"
-      );
+      const theft = await TheftModel.findById(req.params.theftId)
+        .select("-__v")
+        .populate({
+          path: "owner",
+          select: "name surname",
+        })
+        .populate({
+          path: "assignation",
+          select: "department",
+          populate: { path: "department", select: "name" },
+        });
 
       return res.status(200).json(theft);
     }

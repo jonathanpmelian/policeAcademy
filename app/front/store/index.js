@@ -10,6 +10,7 @@ export const actions = {
         password,
       },
     })
+
     return data
   },
   async switchForm({ commit }, loginFormValue) {

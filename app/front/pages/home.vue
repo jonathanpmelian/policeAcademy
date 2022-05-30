@@ -24,10 +24,13 @@ export default {
   layout: 'mainUser',
   data() {
     return {
-      cases: this.$auth.user.thefts,
+      cases: [],
     }
   },
-  methods: {},
+  async asyncData({ $axios }) {
+    const info = await $axios.get(`/api/thefts`)
+    return { cases: info.data }
+  },
 }
 </script>
 

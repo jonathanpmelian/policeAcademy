@@ -145,8 +145,8 @@ export default {
     async signUp() {
       try {
         await this.$axios.post('/api/auth/signup', {
-          name: this.name,
-          surname: this.surname,
+          name: this.name.charAt(0).toUpperCase() + this.name.slice(1),
+          surname: this.surname.charAt(0).toUpperCase() + this.surname.slice(1),
           email: this.email,
           password: this.pass.password,
         })

@@ -3,7 +3,14 @@
     <v-container>
       <v-row>
         <v-col>
-          <v-toolbar-title class="white--text">Police</v-toolbar-title>
+          <v-toolbar-title class="white--text"
+            ><NuxtLink class="linkDeco" to="/home"
+              >Police</NuxtLink
+            ></v-toolbar-title
+          >
+        </v-col>
+        <v-col class="white--text" align="end" align-self="center">
+          <NuxtLink class="linkDeco" to="declaration">New Declaration</NuxtLink>
         </v-col>
       </v-row>
     </v-container>
@@ -16,4 +23,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.linkDeco {
+  text-decoration: none;
+  color: inherit;
+}
+</style>

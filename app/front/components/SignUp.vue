@@ -121,6 +121,7 @@ export default {
             : "Password you entered don't match"
         },
       },
+      error: null,
     }
   },
   computed: {
@@ -141,7 +142,25 @@ export default {
     switchForm: function (e) {
       this.$store.dispatch('switchForm', e)
     },
-    signUp() {},
+    async signUp() {
+      try {
+        await this.$axios.post('/api/auth/signup', {
+          name: this.name,
+          surname: this.surname,
+          email: this.email,
+          password: this.pass.password,
+        })
+
+        let data = {
+          email: this.email,
+          password: this.pass.password,
+        }
+
+        await this.$store.dispatch('login', data)
+      } catch (err) {
+        this.error = err.response.data.message
+      }
+    },
   },
 }
 </script>

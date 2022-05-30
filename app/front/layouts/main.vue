@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <AppBar />
     <v-main class="mx-auto align-center">
       <Nuxt />
     </v-main>
@@ -9,12 +10,8 @@
 
 <script>
 export default {
-  name: 'DefaultLayout',
+  name: 'mainLayout',
 }
 </script>
 
-<style lang="scss">
-.theme--light.v-application {
-  background-color: var(--v-background-base, #1238596b) !important;
-}
-</style>
+<style lang="scss" scoped></style>

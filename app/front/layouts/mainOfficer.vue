@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <AppBarOfficer />
-    <v-main class="mx-auto align-center">
+    <v-main class="mx-auto mt-2">
       <Nuxt />
     </v-main>
     <Footer />

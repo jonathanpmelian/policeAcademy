@@ -10,7 +10,11 @@
           >
         </v-col>
         <v-col class="white--text" align="end" align-self="center">
-          <NuxtLink class="linkDeco" to="/search">Search</NuxtLink>
+          <NuxtLink class="linkDeco" to="/search">
+            Search<v-icon color="white" small class="ml-3"
+              >mdi-magnify</v-icon
+            ></NuxtLink
+          >
         </v-col>
       </v-row>
     </v-container>

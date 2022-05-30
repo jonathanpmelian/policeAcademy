@@ -1,8 +1,37 @@
 <template>
-  <v-container>
+  <v-container class="cardSize">
     <v-row>
-      <v-col>This is the search view</v-col>
+      <v-col align="center">
+        <v-text-field
+          class="searchWidth"
+          background-color="white"
+          filled
+          rounded
+          dense
+          clearable
+          full-width
+          :value="searchPost"
+          label="Search"
+          :placeholder="`Search By ${picked}`"
+          @input="handleSearchPost"
+      /></v-col>
     </v-row>
+    <v-row class="my-4">
+      <v-col align="end">
+        <v-chip>license</v-chip>
+      </v-col>
+      <v-col align="center">
+        <v-chip>status</v-chip>
+      </v-col>
+      <v-col align="start">
+        <v-chip>department</v-chip>
+      </v-col>
+    </v-row>
+    <v-card flat>
+      <v-row>
+        <v-col>This is the search view</v-col>
+      </v-row>
+    </v-card>
   </v-container>
 </template>
 
@@ -18,4 +47,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.cardSize {
+  width: 60vw;
+}
+.searchWidth {
+  width: 60vw;
+}
+</style>

@@ -9,8 +9,11 @@
     </v-row>
     <v-row>
       <v-col>
-        {{ this.$auth.user }}
+        <h4>This is the current status of your declarations</h4>
       </v-col>
+    </v-row>
+    <v-row v-for="(data, i) in cases" :key="i">
+      <TheftCard :data="data" />
     </v-row>
   </v-container>
 </template>
@@ -18,7 +21,12 @@
 <script>
 export default {
   name: 'home',
-  layout: 'main',
+  layout: 'mainUser',
+  data() {
+    return {
+      cases: this.$auth.user.thefts,
+    }
+  },
   methods: {},
 }
 </script>

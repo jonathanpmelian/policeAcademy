@@ -12,7 +12,10 @@
           <h4>Owner:</h4>
         </v-col>
         <v-col align="start">
-          <v-card-text>{{ theftInfo.owner }}</v-card-text>
+          <v-card-text
+            >{{ theftInfo.owner.name }}
+            {{ theftInfo.owner.surname }}</v-card-text
+          >
         </v-col>
       </v-row>
       <v-row>
@@ -67,8 +70,10 @@
         <v-col cols="3" align-self="center" class="ml-4">
           <h4>Assignation:</h4>
         </v-col>
-        <v-col align="start">
-          <v-card-text>{{ theftInfo.assignation }} </v-card-text>
+        <v-col align="start" v-if="theftInfo.assignation">
+          <v-card-text
+            >{{ theftInfo.assignation.department.name }}
+          </v-card-text>
         </v-col>
       </v-row>
     </v-card>

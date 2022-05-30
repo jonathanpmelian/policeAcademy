@@ -7,8 +7,15 @@ async function viewMyProfile(req, res) {
         .select("-__v -thefts -password")
         .populate({
           path: "caseAssigned",
-          populate: { path: "owner", select: ["name", "surname"] },
+          populate: [
+            { path: "owner", select: ["name", "surname"] },
+            {
+              path: "assignation",
+              populate: { path: "department", select: "name" },
+            },
+          ],
         });
+
       return res.status(200).json(user);
     }
     const user = await UserModel.findById(res.locals.user.id)

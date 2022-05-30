@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col><TheftCardFull :data="theft" /></v-col>
+      <v-col><TheftCardFull :theftInfo="theftInfo" /></v-col>
     </v-row>
   </v-container>
 </template>
@@ -17,7 +17,7 @@ export default {
   },
   data() {
     return {
-      theft: this.$auth.user.caseAssigned,
+      theftInfo: this.$auth.user.caseAssigned,
     }
   },
 }

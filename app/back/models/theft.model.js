@@ -53,6 +53,9 @@ const theftSchema = new mongoose.Schema({
   address: {
     type: String,
   },
+  geoPoints: {
+    type: Array,
+  },
   status: {
     type: String,
     enum: ["pending", "assigned", "solved"],

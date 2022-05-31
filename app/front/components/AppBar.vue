@@ -10,7 +10,9 @@
           >
         </v-col>
         <v-col class="white--text" align="end" align-self="center">
-          <NuxtLink class="linkDeco" to="declaration">New Declaration</NuxtLink>
+          <NuxtLink class="linkDeco" to="/declaration"
+            >New Declaration</NuxtLink
+          >
         </v-col>
       </v-row>
     </v-container>

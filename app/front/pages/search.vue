@@ -18,13 +18,13 @@
     </v-row>
     <v-row class="my-4">
       <v-col align="end">
-        <v-chip>license</v-chip>
+        <v-chip>Solved</v-chip>
       </v-col>
       <v-col align="center">
-        <v-chip>status</v-chip>
+        <v-chip>Assigned</v-chip>
       </v-col>
       <v-col align="start">
-        <v-chip>department</v-chip>
+        <v-chip>Pending</v-chip>
       </v-col>
     </v-row>
     <v-card flat>

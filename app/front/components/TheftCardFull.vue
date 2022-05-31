@@ -8,6 +8,35 @@
       </v-row>
       <v-divider></v-divider>
       <v-row>
+        <v-col>
+          <GmapMap
+            ref="mapRef"
+            :center="{
+              lat: theftInfo.geoPoints[0],
+              lng: theftInfo.geoPoints[1],
+            }"
+            :zoom="16"
+            map-type-id="roadmap"
+            style="width: 100%; height: 300px"
+          >
+            <GmapMarker
+              :position="{
+                lat: theftInfo.geoPoints[0],
+                lng: theftInfo.geoPoints[1],
+              }"
+            />
+          </GmapMap>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="3" align-self="center" class="ml-4">
+          <h4>Address:</h4>
+        </v-col>
+        <v-col align="start">
+          <v-card-text>{{ theftInfo.address }} </v-card-text>
+        </v-col>
+      </v-row>
+      <v-row>
         <v-col cols="3" align-self="center" class="ml-4">
           <h4>Owner:</h4>
         </v-col>
@@ -58,7 +87,7 @@
           <v-card-text>{{ theftInfo.color }} </v-card-text>
         </v-col>
       </v-row>
-      <v-row>
+      <v-row v-if="theftInfo.data">
         <v-col cols="3" align-self="center" class="ml-4">
           <h4>Date:</h4>
         </v-col>
@@ -84,6 +113,9 @@
 export default {
   name: 'TheftCardFull',
   props: ['theftInfo'],
+  data() {
+    return {}
+  },
 }
 </script>
 

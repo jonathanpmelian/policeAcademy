@@ -2,7 +2,7 @@
   <v-footer app class="back">
     <v-row>
       <v-col align="center">
-        <span>&copy; PoliceAcademy {{ new Date().getFullYear() }}</span>
+        <span>🚲 &copy; PoliceAcademy {{ new Date().getFullYear() }}</span>
       </v-col>
     </v-row>
   </v-footer>
@@ -16,7 +16,7 @@ export default {
 
 <style lang="scss" scoped>
 .back {
-  background-color: black;
+  background-color: #424550;
   color: white;
 }
 </style>

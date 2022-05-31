@@ -21,7 +21,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: '~plugin/maps.js', ssr: true }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -95,11 +95,15 @@ export default {
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
         },
-        light: {},
+        light: {
+          secondary: '#2B788E',
+        },
       },
     },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: [/^vue2-google-maps($|\/)/],
+  },
 }

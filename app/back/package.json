@@ -7,11 +7,12 @@
     "dev": "NODE_ENV=development nodemon index.js",
     "start": "NODE_ENV=production node index.js",
     "test": "NODE_ENV=test jest --verbose --silent",
-    "test:watch":"npm run test -- --watch"
+    "test:watch": "npm run test -- --watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",

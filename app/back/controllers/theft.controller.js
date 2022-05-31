@@ -1,7 +1,6 @@
 const TheftModel = require("../models/theft.model");
 const UserModel = require("../models/user.model");
 const axios = require("axios");
-const cors = require("cors");
 
 async function addTheft(req, res, next) {
   try {

@@ -4,9 +4,9 @@
       <v-row>
         <v-col>
           <v-toolbar-title class="white--text"
-            ><NuxtLink class="linkDeco" to="/home"
-              >Police</NuxtLink
-            ></v-toolbar-title
+            ><NuxtLink class="linkDeco" to="/home">
+              Police
+            </NuxtLink></v-toolbar-title
           >
         </v-col>
         <v-col class="white--text" align="end" align-self="center">
@@ -29,5 +29,8 @@ export default {
 .linkDeco {
   text-decoration: none;
   color: inherit;
+}
+.imgSize {
+  width: 50px;
 }
 </style>

@@ -5,11 +5,6 @@ const morgan = require("morgan");
 const express = require("express");
 const { NODE_ENV } = process.env;
 const mongoose = require("mongoose");
-// const corsOptions = {
-//   origin: "http://localhost:3000",
-//   credentials: true,
-//   optionSuccessStatus: 200,
-// };
 
 module.exports = (async function () {
   try {

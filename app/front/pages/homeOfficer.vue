@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col
-        ><h2>Welcome back officer {{ this.$auth.user.surname }}!</h2>
+        ><h2>Welcome back officer {{ this.$auth.user.surname }}! 👮</h2>
       </v-col>
     </v-row>
     <div v-if="theftInfo">
@@ -18,7 +18,7 @@
         >
       </v-row>
     </div>
-    <v-row>
+    <v-row v-if="!theftInfo">
       <v-col>There is no more work to do for now!</v-col>
     </v-row>
   </v-container>

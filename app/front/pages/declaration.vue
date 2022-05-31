@@ -12,16 +12,19 @@
           <v-card-text>
             <v-form>
               <v-text-field
+                prepend-icon="mdi-card-account-details"
                 label="LicenseNumber"
                 v-model="licenseNumber"
                 :rules="[rules.licenseNumberMatch]"
               ></v-text-field>
               <v-text-field
+                prepend-icon="mdi-bicycle"
                 label="Type"
                 v-model="type"
                 :rules="[rules.typeMatch]"
               ></v-text-field>
               <v-text-field
+                prepend-icon="mdi-palette"
                 label="Color"
                 v-model="color"
                 :rules="[rules.colorMatch]"
@@ -35,6 +38,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                    prepend-icon="mdi-calendar-range"
                     v-model="date"
                     label="Date"
                     readonly
@@ -58,10 +62,15 @@
               </v-menu>
               <v-text-field
                 label="Description"
+                prepend-icon="mdi-text-box"
                 v-model="description"
                 :rules="[rules.descriptionMatch]"
               ></v-text-field>
-              <v-text-field label="Address" v-model="address"></v-text-field>
+              <v-text-field
+                prepend-icon="mdi-map-marker"
+                label="Address"
+                v-model="address"
+              ></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>

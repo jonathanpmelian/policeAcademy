@@ -3,7 +3,7 @@
     <v-row>
       <v-col class=""
         ><h2>
-          Welcome {{ this.$auth.user.name }} {{ this.$auth.user.surname }}!
+          Welcome {{ this.$auth.user.name }} {{ this.$auth.user.surname }}! 👋
         </h2>
       </v-col>
     </v-row>

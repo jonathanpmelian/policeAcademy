@@ -19,6 +19,6 @@ export default {
 }
 .bC {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 }
 </style>

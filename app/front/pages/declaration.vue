@@ -156,7 +156,6 @@ export default {
   },
   methods: {
     async register() {
-      console.log(typeof this.computedDate, this.computedDate)
       await this.$axios.post(`/api/thefts`, {
         licenseNumber: this.licenseNumber,
         type: this.type.charAt(0).toUpperCase() + this.type.slice(1),
@@ -166,6 +165,12 @@ export default {
           this.description.charAt(0).toUpperCase() + this.description.slice(1),
         address: this.address,
       })
+      this.licenseNumber = ''
+      this.type = ''
+      this.color = ''
+      this.date = ''
+      this.description = ''
+      this.address = ''
     },
   },
 }

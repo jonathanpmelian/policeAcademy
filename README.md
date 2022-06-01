@@ -1,10 +1,10 @@
 # policeAcademy
-![police-academy](https://user-images.githubusercontent.com/89730979/171272185-4c231f2e-661f-4b09-a27b-c09119e7bbf4.jpg)
+<img width="800" alt="image" src="https://user-images.githubusercontent.com/89730979/171272185-4c231f2e-661f-4b09-a27b-c09119e7bbf4.jpg"></br>
 ## Description
 Stolen bikes are a typical problem in big cities. The Police want to be more efficient in resolving stolen bike cases. They decided to build a software that can automate their processes.
 Theft are automatically assigned to free officers when a new theft is created or when an officer resolved an assigment.
 ## Data Model
-<img width="511" alt="image" src="https://user-images.githubusercontent.com/89730979/170578788-c632d25c-3fad-476d-9d46-4ef7a0dcf48d.png"></br>
+<img width="511" alt="image" src="https://user-images.githubusercontent.com/89730979/171474139-24c62e00-9368-488a-b79e-cc9d854f0a69.png"></br>
 ## Role Access </br>
 **User:** A user is able to add a theft and view the status of their thefts declarations. </br></br>
 **Officer:** An officer owns to a department and manage just one theft case at a time. He is able to mark a theft as resolved and can search thefts filtering by different parameters.</br></br>

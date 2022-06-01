@@ -8,7 +8,7 @@ Theft are automatically assigned to free officers when a new theft is created or
 ## Role Access </br>
 **User:** A user is able to add a theft and view the status of their thefts declarations. </br></br>
 **Officer:** An officer owns to a department and manage just one theft case at a time. He is able to mark a theft as resolved and can search thefts filtering by different parameters.</br></br>
-**Director:** A director owns to a department. He can register new officers to his department and have access to the information related with it.</br></br>
+**Director:** A director owns to a department. He can register new officers to his department.</br></br>
 **Admin:** An admin is able to register roles different to default user.
 ## API Endpoints
 

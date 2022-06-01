@@ -12,7 +12,6 @@ export function filterThefts(filter, thefts) {
   // Search
   if (filter.search !== '') {
     const searchList = []
-
     const searchTerm = filter.search.toUpperCase()
     for (let i = 0; i < filteredList.length; i++) {
       if (

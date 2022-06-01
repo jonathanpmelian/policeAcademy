@@ -47,7 +47,11 @@ export const mutations = {
     state.filteredThefts = [...thefts]
   },
   setFilterStatus(state, status) {
-    state.filter.status = status
+    if (state.filter.status !== status) {
+      state.filter.status = status
+    } else {
+      state.filter.status = ''
+    }
   },
   setFilterSearch(state, search) {
     state.filter.search = search

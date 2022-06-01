@@ -16,6 +16,7 @@ export default {
 
     return { theftInfo: data }
   },
+  mounted() {},
 }
 </script>
 

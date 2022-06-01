@@ -70,6 +70,7 @@
                 prepend-icon="mdi-map-marker"
                 label="Address"
                 v-model="address"
+                :rules="[rules.addressMatch]"
               ></v-text-field>
             </v-form>
           </v-card-text>
@@ -96,6 +97,11 @@
 export default {
   name: 'declaration',
   layout: 'mainUser',
+  middleware({ redirect, $auth }) {
+    if ($auth.user.role !== 'user') {
+      return redirect('/')
+    }
+  },
   data() {
     return {
       licenseNumber: '',
@@ -124,6 +130,11 @@ export default {
           return /\b([A-ZÀ-ÿa-z][-,a-z. '\\ ]{2,250})/.test(this.description)
             ? true
             : 'Invalid descrption format'
+        },
+        addressMatch: () => {
+          return /^[_A-z0-9]*((-|\s)*[_A-z0-9])*$/.test(this.address)
+            ? true
+            : 'Invalid address format'
         },
       },
     }

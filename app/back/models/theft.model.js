@@ -56,12 +56,6 @@ const theftSchema = new mongoose.Schema({
   address: {
     type: String,
     required: [true, "Address is required"],
-    validate: {
-      validator: function (v) {
-        return /^[_A-z0-9]*((-|\s)*[_A-z0-9])*$/.test(v);
-      },
-      message: "Special characters and symbols are not allowed",
-    },
   },
   geoPoints: {
     type: Array,

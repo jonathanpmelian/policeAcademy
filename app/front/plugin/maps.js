@@ -7,22 +7,3 @@ Vue.use(VueGoogleMaps, {
     libraries: 'directions',
   },
 })
-
-let { MapElementFactory } = VueGoogleMaps
-
-let directionsRenderer = MapElementFactory({
-  name: 'directionsRenderer',
-  ctr: () => google.maps.DirectionsRenderer,
-  events: ['directions_changed'],
-  mappedProps: {
-    routeIndex: { type: Number },
-    options: { type: Object },
-    panel: {},
-    directions: { type: Object },
-  },
-  props: {},
-  beforeCreate(options) {},
-  afterCreate(directionsRendererInstance) {},
-})
-
-Vue.component('directionsRenderer', directionsRenderer)

@@ -24,7 +24,7 @@ export default {
   layout: 'mainUser',
   middleware({ redirect, $auth }) {
     if ($auth.user.role === 'officer') {
-      return redirect('/homeOfficer')
+      return redirect('/officer')
     }
   },
   data() {

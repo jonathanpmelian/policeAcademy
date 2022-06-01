@@ -22,7 +22,12 @@
       </v-row>
       <v-divider></v-divider>
       <v-row>
-        <v-col align-self="center" align="center" class="mt-2">
+        <v-col
+          align-self="center"
+          align="center"
+          class="mt-2"
+          v-if="theftAssigned"
+        >
           {{ data.assignation.department.name }}
         </v-col>
         <v-col align-self="center" align="center" class="mt-2">
@@ -39,6 +44,11 @@
 export default {
   name: 'TheftCard',
   props: ['data'],
+  computed: {
+    theftAssigned() {
+      return this.data.assignation
+    },
+  },
   methods: {
     showTheft() {
       this.$router.replace(`/theft/${this.data._id}`)

@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <AppBar />
+    <AppBar v-if="this.$auth.user.role === 'user'" />
+    <AppBarOfficer v-else />
     <v-main class="mx-auto align-center">
       <Nuxt />
     </v-main>

@@ -26,7 +26,7 @@
 
 <script>
 export default {
-  name: 'homeOfficer',
+  name: 'officer',
   layout: 'mainOfficer',
   middleware({ redirect, $auth }) {
     if ($auth.user.role !== 'officer') {

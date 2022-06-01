@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const theftSchema = new mongoose.Schema({
   licenseNumber: {
     type: String,
-    required: true,
+    required: [true, "License Number is required"],
     unique: true,
     validate: {
       validator: function (v) {
@@ -14,6 +14,7 @@ const theftSchema = new mongoose.Schema({
   },
   color: {
     type: String,
+    required: [true, "Color is required"],
     validate: {
       validator: function (v) {
         return /\b([A-ZÀ-ÿ][-,a-z. '\\ ]{2,13})/.test(v);
@@ -24,6 +25,7 @@ const theftSchema = new mongoose.Schema({
   },
   type: {
     type: String,
+    required: [true, "Type is required"],
     validate: {
       validator: function (v) {
         return /\b([A-ZÀ-ÿ][-,a-z. '\\ ]{3,13})/.test(v);
@@ -35,13 +37,14 @@ const theftSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
-    required: true,
+    required: [true, "Owner is required"],
   },
   date: {
     type: Date,
   },
   description: {
     type: String,
+    required: [true, "Description is required"],
     validate: {
       validator: function (v) {
         return /\b([A-ZÀ-ÿ][-,a-z. '\\ ]{2,250})/.test(v);
@@ -52,6 +55,13 @@ const theftSchema = new mongoose.Schema({
   },
   address: {
     type: String,
+    required: [true, "Address is required"],
+    validate: {
+      validator: function (v) {
+        return /^[_A-z0-9]*((-|\s)*[_A-z0-9])*$/.test(v);
+      },
+      message: "Special characters and symbols are not allowed",
+    },
   },
   geoPoints: {
     type: Array,
@@ -59,7 +69,7 @@ const theftSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["pending", "assigned", "solved"],
-    required: true,
+    required: [true, "Status is required"],
     default: "pending",
   },
   assignation: {

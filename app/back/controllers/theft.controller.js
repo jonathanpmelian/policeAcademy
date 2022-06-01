@@ -1,18 +1,10 @@
 const TheftModel = require("../models/theft.model");
 const UserModel = require("../models/user.model");
-const axios = require("axios");
+const { setAddress } = require("../utils/googleMapsApi");
 
 async function addTheft(req, res, next) {
   try {
-    const mapsData = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.address}&key=${process.env.MAPS_KEY}`
-    );
-
-    req.body.address = mapsData.data.results[0].formatted_address;
-    req.body.geoPoints = [
-      mapsData.data.results[0].geometry.location.lat,
-      mapsData.data.results[0].geometry.location.lng,
-    ];
+    await setAddress(req);
 
     req.body.owner = res.locals.user.id;
     const stolenProduct = await TheftModel.create(req.body);

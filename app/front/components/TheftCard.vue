@@ -7,7 +7,7 @@
         >
         <v-col align-self="center" align="end" class="mr-5">
           <v-chip
-            class="ma-2 white--text"
+            class="ma-2 white--text chipW text-center"
             label
             :color="
               data.status === 'solved'
@@ -60,5 +60,8 @@ export default {
 <style lang="scss" scoped>
 .cardSize {
   width: 400px;
+}
+.chipW {
+  width: 85px;
 }
 </style>

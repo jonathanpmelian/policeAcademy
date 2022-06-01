@@ -1,5 +1,6 @@
 # policeAcademy
 <img width="800" alt="image" src="https://user-images.githubusercontent.com/89730979/171272185-4c231f2e-661f-4b09-a27b-c09119e7bbf4.jpg"></br>
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5fe7e98d-36c2-49bf-a374-139604df2a00/deploy-status)](https://app.netlify.com/sites/policeacademylp/deploys)https://policeacademylp.netlify.app
 ## Description
 Stolen bikes are a typical problem in big cities. The Police want to be more efficient in resolving stolen bike cases. They decided to build a software that can automate their processes.
 Theft are automatically assigned to free officers when a new theft is created or when an officer resolved an assigment.

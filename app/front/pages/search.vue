@@ -15,7 +15,7 @@
           @input="handleSearchTheft"
       /></v-col>
     </v-row>
-    <v-row class="mb-4 mx-4">
+    <v-row class="mb-4">
       <v-col align="end">
         <v-btn
           color="green"
@@ -105,7 +105,7 @@ export default {
 
 <style lang="scss" scoped>
 .bSize {
-  width: 100vw;
+  width: 600px;
   height: 100vh;
 }
 .searchWidth {

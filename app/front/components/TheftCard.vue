@@ -22,15 +22,10 @@
       </v-row>
       <v-divider></v-divider>
       <v-row>
-        <v-col
-          align-self="center"
-          align="center"
-          class="mt-2"
-          v-if="this.$route.name === 'search'"
-        >
+        <v-col align-self="center" align="center" class="mt-2">
           {{ data.assignation.department.name }}
         </v-col>
-        <v-col align-self="center" align="center" class="mt-2" v-else>
+        <v-col align-self="center" align="center" class="mt-2">
           <v-btn class="mb-2" color="primary" text @click="showTheft"
             >View</v-btn
           >

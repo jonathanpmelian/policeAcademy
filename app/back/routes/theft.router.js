@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { checkAuth, checkOfficer } = require("../utils/index");
+const { checkAuth, checkOfficer } = require("../utils/auth");
 const {
   addTheft,
   getAllThefts,

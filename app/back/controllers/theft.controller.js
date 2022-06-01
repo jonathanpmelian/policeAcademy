@@ -62,28 +62,19 @@ async function getAllThefts(req, res) {
 
 async function getOneTheft(req, res) {
   try {
-    if (res.locals.user.role === "user") {
-      const theft = await TheftModel.findById(req.params.theftId)
-        .select("-__v")
-        .populate({
-          path: "owner",
-          select: "name surname",
-        })
-        .populate({
-          path: "assignation",
-          select: "department",
-          populate: { path: "department", select: "name" },
-        });
+    const theft = await TheftModel.findById(req.params.theftId)
+      .select("-__v")
+      .populate({
+        path: "owner",
+        select: "name surname",
+      })
+      .populate({
+        path: "assignation",
+        select: "department",
+        populate: { path: "department", select: "name" },
+      });
 
-      return res.status(200).json(theft);
-    }
-
-    const theft = await TheftModel.findById(req.params.theftId).populate({
-      path: "owner",
-      select: "name surname",
-    });
-
-    res.status(200).json(theft);
+    return res.status(200).json(theft);
   } catch (err) {
     console.log(err);
     res.status(500).send(`Error getting theft: ${err}`);

@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const UserModel = require("../models/user.model");
 
 async function tokenVerification(req, res, next) {
@@ -12,6 +13,26 @@ async function tokenVerification(req, res, next) {
       res.locals.user = user;
       next();
     }
+  });
+}
+
+function hashPassword(req) {
+  req.body.password = bcrypt.hashSync(
+    req.body.password,
+    parseInt(process.env.SALTROUNDS)
+  );
+
+  return req.body.password;
+}
+
+function comparePassword(req, res, user) {
+  bcrypt.compare(req.body.password, user.password, (err, result) => {
+    if (err) return res.status(500).send(`Error checking password: ${err}`);
+    if (!result) return res.status(500).send(`Email or password not valid`);
+
+    const token = jwt.sign({ email: user.email }, process.env.SECRET);
+
+    return res.status(200).json({ token });
   });
 }
 
@@ -62,16 +83,12 @@ async function checkOfficer(req, res, next) {
   }
 }
 
-function palindrome(string) {
-  if (string === undefined) return undefined;
-  return string.split("").reverse().join("");
-}
-
 module.exports = {
+  hashPassword,
+  comparePassword,
   check,
   checkAuth,
   checkAdmin,
   checkDirector,
   checkOfficer,
-  palindrome,
 };

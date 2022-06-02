@@ -24,6 +24,10 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [{ src: '~plugin/maps.js', ssr: true }],
 
+  env: {
+    MAPS_KEY: process.env.MAPS_KEY,
+  },
+
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 

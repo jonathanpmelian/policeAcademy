@@ -46,7 +46,7 @@ export default {
   props: ['data'],
   computed: {
     theftAssigned() {
-      return this.data.assignation
+      return this.data.assignation || this.data.assignation.department
     },
   },
   methods: {

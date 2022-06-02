@@ -29,6 +29,10 @@ async function getAllThefts(req, res) {
       const user = await UserModel.findById(res.locals.user.id).populate({
         path: "thefts",
         select: ["-owner", "-__v"],
+        populate: {
+          path: "assignation",
+          populate: { path: "department", select: "name" },
+        },
       });
       return res.status(200).json(user.thefts);
     }

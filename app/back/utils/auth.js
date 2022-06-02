@@ -83,6 +83,14 @@ async function checkOfficer(req, res, next) {
   }
 }
 
+async function checkUser(req, res, next) {
+  if (res.locals.user.role !== "user")
+    return res.status(500).send(`User not Authorized`);
+  else {
+    next();
+  }
+}
+
 module.exports = {
   hashPassword,
   comparePassword,
@@ -91,4 +99,5 @@ module.exports = {
   checkAdmin,
   checkDirector,
   checkOfficer,
+  checkUser,
 };

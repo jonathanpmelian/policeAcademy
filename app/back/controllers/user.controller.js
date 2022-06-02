@@ -11,6 +11,7 @@ async function viewMyProfile(req, res) {
             { path: "owner", select: ["name", "surname"] },
             {
               path: "assignation",
+              select: "department",
               populate: { path: "department", select: "name" },
             },
           ],

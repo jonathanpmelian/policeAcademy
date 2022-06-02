@@ -17,29 +17,31 @@ All API Request must be prepended with `/api`
 
 ### Authentication Endpoints
 
-The AUTHENTICATION flow for the application is:
+The AUTHENTICATION flow for the application is: https://documenter.getpostman.com/view/18826957/Uz5FKwjf
  
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
 -------|------------------|-------|----------------|----------------------------|-------------------------------------------------|--------------------
-POST   | /auth/signup     | NO    | -              | User Signup                | `name`, `surname`, `email`, `password`, `role`  | `token`
+POST   | /auth/signup     | NO    | -              | User Signup                | **user**: `name`, `surname`, `email`, `password` **others**:`name`, `surname`, `email`, `password`, `role`  | **user**:`token` **others**: `user`
 POST   | /auth/login      | NO    | -              | User Login                 | `email`, `password`                             | `token`
 
 The DEPARTMENT flow for the application is:
+https://documenter.getpostman.com/view/18826957/Uz5FKwfM
  
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
 -------|------------------|-------|----------------|----------------------------|-------------------------------------------------|--------------------
-POST   | /department      | YES   | Director       | Create a Department        | `name` `director`                               | `name` `director` `officers`
+POST   | /department      | YES   | Director       | Create a Department        |  `name`                                         | `name` `director` [`officers`]
 
-The THEFTS flow for the application is:
+The THEFTS flow for the application is: https://documenter.getpostman.com/view/18826957/Uz5FKwtb
  
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
 -------|------------------|-------|----------------|----------------------------|-------------------------------------------------|--------------------
-GET    | /thefts          | YES   | -              | Show all thefts            |                                                 | **user:** [`licenseNumber` `color` `type` `date` `description` `address` `status`]  **others:** [`licenseNumber` `color` `type` `owner` `date` `description` `address` `status`]
-GET    | /thefts/:theftId | YES   | -              | Show a theft               |                                                 | **user:** `licenseNumber` `color` `type` `date` `description` `address` `status`  **others:** `licenseNumber` `color` `type` `owner` `date` `description` `address` `status`
-POST   | /thefts          | YES   | -              | Create a theft             | `license number`                                | `licenseNumber` `color` `type` `owner` `date` `description` `address` `status`
+GET    | /thefts          | YES   | -              | Show all thefts            |  **!user**: `query` (optional)                | **user:** `licenseNumber` `color` `type` `date` `description` `address` `status` `department` `geoPoints` **others:** `licenseNumber` `color` `type` `owner` `date` `description` `address` `status` `department` `geoPoints`
+GET    | /thefts/:theftId | YES   | -              | Show a theft               |                                                 | `licenseNumber` `color` `type` `date` `description` `address` `status` `geoPoints`  `owner` `department` 
+POST   | /thefts          | YES   | User           | Create a theft             | `licenseNumber` `color` `type` `date` `description` `address` | `licenseNumber` `color` `type` `owner` `date` `description` `address` `status`
+PUT   | /thefts/:theftId  | YES   | Officer        | Mark as resolved           |                                                 | `theft` (new assignation)
 
-The USER flow for the application is:
+The USER flow for the application is: https://documenter.getpostman.com/view/18826957/Uz5FKwjm
  
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
 -------|------------------|-------|----------------|----------------------------|-------------------------------------------------|--------------------
-GET    | /user            | YES   | -              | View my profile            |                                                 | `name` `surname` `email` `role`
+GET    | /user            | YES   | -              | View my profile            |                                                 | **user**:`name` `surname` `email` `role` `thefts`  **officer**: `name` `surname` `email` `role` `department` `caseAssigned`

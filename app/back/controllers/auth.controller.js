@@ -1,52 +1,37 @@
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/user.model");
 const DepartmentModel = require("../models/department.model");
-const { hashPassword, comparePassword } = require("../utils/auth");
+const { hashPassword, comparePassword, createUser } = require("../utils/auth");
 
 async function signup(req, res, next) {
+  const { name, surname, email, password, role, department } = req.body;
+  const loggedUser = res.locals.user;
+
   try {
-    if (
-      (!res.locals.user ||
-        (res.locals.user.role !== "admin" &&
-          res.locals.user.role !== "director")) &&
-      req.body.role
-    ) {
-      return res.status(400).send(`User not authorized`);
-    }
+    const newUser = await createUser(
+      name,
+      surname,
+      email,
+      password,
+      role,
+      department,
+      loggedUser
+    );
 
-    hashPassword(req);
-
-    if (req.body.role === "officer") {
-      const department = await DepartmentModel.findById(
-        req.body.department || res.locals.user.department._id.toString()
-      );
-
-      if (department) {
-        const officer = await UserModel.create(req.body);
-        department.officers.push(officer);
-        officer.department = department.id;
-
-        await department.save();
-        await officer.save();
-        res.locals.officer = officer;
-
-        next();
-      } else {
-        return res.status(500).send("Invalid department");
-      }
+    if (newUser.role === "officer") {
+      res.locals.newUser = newUser;
+      next();
     } else {
-      const user = await UserModel.create(req.body);
-
-      if (user.role === "user") {
-        const token = jwt.sign({ email: user.email }, process.env.SECRET);
+      if (newUser.role === "user") {
+        const token = jwt.sign({ email: newUser.email }, process.env.SECRET);
 
         return res.status(200).json({ token });
       }
-      res.status(200).json(user);
+      res.status(200).json(newUser);
     }
   } catch (err) {
     console.log(err);
-    res.status(500).send(`Error creating user: ${err}`);
+    res.status(400).json({ message: `Error creating user: ${err.message}` });
   }
 }
 

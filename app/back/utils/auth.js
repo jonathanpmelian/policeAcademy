@@ -1,6 +1,68 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/user.model");
+const DepartmentModel = require("../models/department.model");
+
+async function createUser(
+  name,
+  surname,
+  email,
+  password,
+  role,
+  department,
+  loggedUser
+) {
+  try {
+    if (
+      (!loggedUser ||
+        (loggedUser.role !== "admin" && loggedUser.role !== "director")) &&
+      role
+    ) {
+      throw new Error("User not authorized");
+    }
+
+    hashPassword(password);
+
+    if (role === "officer") {
+      const department = await DepartmentModel.findById(
+        department || loggedUser.department._id.toString()
+      );
+
+      if (department) {
+        const newUser = await UserModel.create({
+          name,
+          surname,
+          email,
+          password,
+          role,
+          department,
+        });
+
+        department.officers.push(newUser);
+        newUser.department = department.id;
+
+        await department.save();
+        await newUser.save();
+
+        return newUser;
+      } else {
+        throw new Error("Invalid department");
+      }
+    } else {
+      const newUser = await UserModel.create({
+        name,
+        surname,
+        email,
+        password,
+        role,
+      });
+
+      return newUser;
+    }
+  } catch (err) {
+    throw err;
+  }
+}
 
 async function tokenVerification(req, res, next) {
   jwt.verify(req.headers.token, process.env.SECRET, async (err, decoded) => {
@@ -16,13 +78,10 @@ async function tokenVerification(req, res, next) {
   });
 }
 
-function hashPassword(req) {
-  req.body.password = bcrypt.hashSync(
-    req.body.password,
-    parseInt(process.env.SALTROUNDS)
-  );
+function hashPassword(password) {
+  password = bcrypt.hashSync(password, parseInt(process.env.SALTROUNDS));
 
-  return req.body.password;
+  return password;
 }
 
 function comparePassword(req, res, user) {
@@ -92,6 +151,7 @@ async function checkUser(req, res, next) {
 }
 
 module.exports = {
+  createUser,
   hashPassword,
   comparePassword,
   check,

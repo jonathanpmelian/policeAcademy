@@ -6,7 +6,7 @@ const express = require("express");
 const { NODE_ENV } = process.env;
 const mongoose = require("mongoose");
 
-module.exports = (async function () {
+(async function () {
   try {
     await mongoose.connect(
       NODE_ENV === "test"
@@ -29,7 +29,7 @@ module.exports = (async function () {
       .use("/api", require("./routes/index"));
 
     const PORT = process.env.PORT || 8080;
-    const server = app.listen(PORT, (err) => {
+    app.listen(PORT, (err) => {
       if (err) {
         console.log(err);
       }
@@ -38,7 +38,6 @@ module.exports = (async function () {
       console.info(`📡  PORT: http://localhost:${PORT}`);
       console.info(">".repeat(40) + "\n");
     });
-    return { app, server };
   } catch (err) {
     console.log(err);
   }

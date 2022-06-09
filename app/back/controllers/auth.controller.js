@@ -21,17 +21,18 @@ async function signup(req, res, next) {
     if (newUser.role === "officer") {
       res.locals.newUser = newUser;
       next();
-    } else {
-      if (newUser.role === "user") {
-        const token = jwt.sign({ email: newUser.email }, process.env.SECRET);
-
-        return res.status(200).json({ token });
-      }
-      res.status(200).json(newUser);
     }
+
+    if (newUser.role === "user") {
+      const token = jwt.sign({ email: newUser.email }, process.env.SECRET);
+
+      return res.status(200).json({ token });
+    }
+
+    res.status(200).json(newUser);
   } catch (err) {
     console.log(err);
-    res.status(400).json({ message: `Error creating user: ${err.message}` });
+    res.status(500).json({ message: `Error creating user: ${err.message}` });
   }
 }
 

@@ -5,12 +5,13 @@ const {
   hashPassword,
   comparePassword,
   createUser,
-  assignDepartment,
+  assignDepartmentToOfficer,
+  assignOfficerToDepartment,
 } = require("../utils/auth");
 const { assignTheft } = require("../utils/assignment");
 
 async function signup(req, res) {
-  const { name, surname, email, password, role, department } = req.body;
+  let { name, surname, email, password, role, department } = req.body;
   const loggedUser = res.locals.user;
 
   try {
@@ -21,7 +22,10 @@ async function signup(req, res) {
     )
       return res.status(403).send("User not authorized");
 
-    hashPassword(password);
+    password = hashPassword(password);
+
+    if (role === "officer")
+      department = await assignDepartmentToOfficer(department, loggedUser);
 
     const newUser = await createUser(
       name,
@@ -29,12 +33,11 @@ async function signup(req, res) {
       email,
       password,
       role,
-      department,
-      loggedUser
+      department
     );
 
     if (newUser.role === "officer") {
-      await assignDepartment(newUser, department, loggedUser);
+      await assignOfficerToDepartment(newUser);
       await assignTheft(newUser);
     }
 

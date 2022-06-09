@@ -12,26 +12,30 @@ describe("Users created when", () => {
       "Jonathan",
       "Pulido",
       "jonathan@policeacademy.com",
-      "1234"
+      "1234",
+      undefined,
+      undefined
     );
 
     expect(newUser.name).toEqual("Jonathan");
     expect(newUser.surname).toEqual("Pulido");
     expect(newUser.email).toEqual("jonathan@policeacademy.com");
+    expect(newUser.role).toEqual("user");
   });
 });
 
 describe("Errors thrown when", () => {
   test("email repeated", async () => {
-    await createUser(
-      "Jonathan",
-      "Pulido",
-      "jonathan@policeacademy.com",
-      "1234"
-    );
+    await createUser("Leo", "Messi", "messi@policeacademy.com", "1234");
 
     await expect(
-      createUser("Leo", "Messi", "jonathan@policeacademy.com", "1234")
+      createUser("Jonathan", "Pulido", "messi@policeacademy.com", "1234")
+    ).rejects.toThrow();
+  });
+
+  test("missed required params", async () => {
+    await expect(
+      createUser("Jonathan", undefined, "jonathan@policeacademy.com", "1234")
     ).rejects.toThrow();
   });
 });

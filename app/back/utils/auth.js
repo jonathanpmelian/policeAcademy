@@ -4,7 +4,7 @@ const UserModel = require("../models/user.model");
 const DepartmentModel = require("../models/department.model");
 const res = require("express/lib/response");
 
-async function createUser(name, surname, email, password, role) {
+async function createUser(name, surname, email, password, role, department) {
   try {
     const newUser = await UserModel.create({
       name,
@@ -12,6 +12,7 @@ async function createUser(name, surname, email, password, role) {
       email,
       password,
       role,
+      department,
     });
 
     return newUser;
@@ -20,19 +21,28 @@ async function createUser(name, surname, email, password, role) {
   }
 }
 
-async function assignDepartment(newUser, department, loggedUser) {
+async function assignDepartmentToOfficer(department, loggedUser) {
   try {
     const departmentFinded = await DepartmentModel.findById(
       department || loggedUser.department._id.toString()
     );
 
-    departmentFinded.officers.push(newUser);
-    newUser.department = departmentFinded.id;
+    department = departmentFinded.id;
 
-    await departmentFinded.save();
-    await newUser.save();
+    return department;
   } catch (err) {
     throw new Error(`Error assigning departmet: ${err}`);
+  }
+}
+
+async function assignOfficerToDepartment(newUser) {
+  try {
+    const department = await DepartmentModel.findById(newUser.department);
+    department.officers.push(newUser);
+
+    await department.save();
+  } catch (err) {
+    throw new Error(`Error assigning officer to department: ${err}`);
   }
 }
 
@@ -51,8 +61,7 @@ async function tokenVerification(req, res, next) {
 }
 
 function hashPassword(password) {
-  password = bcrypt.hashSync(password, parseInt(process.env.SALTROUNDS));
-  return password;
+  return bcrypt.hashSync(password, parseInt(process.env.SALTROUNDS));
 }
 
 function comparePassword(req, res, user) {
@@ -70,6 +79,7 @@ module.exports = {
   createUser,
   hashPassword,
   comparePassword,
-  assignDepartment,
+  assignDepartmentToOfficer,
+  assignOfficerToDepartment,
   tokenVerification,
 };

@@ -2,53 +2,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/user.model");
 const DepartmentModel = require("../models/department.model");
+const res = require("express/lib/response");
 
-async function createUser(
-  name,
-  surname,
-  email,
-  password,
-  role,
-  department,
-  loggedUser
-) {
+async function createUser(name, surname, email, password, role) {
   try {
-    if (
-      (!loggedUser ||
-        (loggedUser.role !== "admin" && loggedUser.role !== "director")) &&
-      role
-    )
-      throw new Error("User not authorized");
-
-    hashPassword(password);
-
-    if (role === "officer") {
-      const department = await DepartmentModel.findById(
-        department || loggedUser.department._id.toString()
-      );
-
-      if (department) {
-        const newUser = await UserModel.create({
-          name,
-          surname,
-          email,
-          password,
-          role,
-          department,
-        });
-
-        department.officers.push(newUser);
-        newUser.department = department.id;
-
-        await department.save();
-        await newUser.save();
-
-        return newUser;
-      }
-
-      throw new Error("Invalid department");
-    }
-
     const newUser = await UserModel.create({
       name,
       surname,
@@ -59,7 +16,23 @@ async function createUser(
 
     return newUser;
   } catch (err) {
-    throw err;
+    throw new Error(`Error creating user: ${err}`);
+  }
+}
+
+async function assignDepartment(newUser, department, loggedUser) {
+  try {
+    const departmentFinded = await DepartmentModel.findById(
+      department || loggedUser.department._id.toString()
+    );
+
+    departmentFinded.officers.push(newUser);
+    newUser.department = departmentFinded.id;
+
+    await departmentFinded.save();
+    await newUser.save();
+  } catch (err) {
+    throw new Error(`Error assigning departmet: ${err}`);
   }
 }
 
@@ -79,7 +52,6 @@ async function tokenVerification(req, res, next) {
 
 function hashPassword(password) {
   password = bcrypt.hashSync(password, parseInt(process.env.SALTROUNDS));
-
   return password;
 }
 
@@ -98,4 +70,6 @@ module.exports = {
   createUser,
   hashPassword,
   comparePassword,
+  assignDepartment,
+  tokenVerification,
 };

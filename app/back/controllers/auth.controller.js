@@ -1,13 +1,28 @@
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/user.model");
 const DepartmentModel = require("../models/department.model");
-const { hashPassword, comparePassword, createUser } = require("../utils/auth");
+const {
+  hashPassword,
+  comparePassword,
+  createUser,
+  assignDepartment,
+} = require("../utils/auth");
+const { assignTheft } = require("../utils/assignment");
 
-async function signup(req, res, next) {
+async function signup(req, res) {
   const { name, surname, email, password, role, department } = req.body;
   const loggedUser = res.locals.user;
 
   try {
+    if (
+      (!loggedUser ||
+        (loggedUser.role !== "admin" && loggedUser.role !== "director")) &&
+      role
+    )
+      return res.status(403).send("User not authorized");
+
+    hashPassword(password);
+
     const newUser = await createUser(
       name,
       surname,
@@ -19,8 +34,8 @@ async function signup(req, res, next) {
     );
 
     if (newUser.role === "officer") {
-      res.locals.newUser = newUser;
-      next();
+      await assignDepartment(newUser, department, loggedUser);
+      await assignTheft(newUser);
     }
 
     if (newUser.role === "user") {
@@ -32,7 +47,7 @@ async function signup(req, res, next) {
     res.status(200).json(newUser);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: `Error creating user: ${err.message}` });
+    res.status(500).json({ message: err.message });
   }
 }
 

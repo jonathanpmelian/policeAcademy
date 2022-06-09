@@ -1,23 +1,21 @@
 const TheftModel = require("../models/theft.model");
 const UserModel = require("../models/user.model");
 
-async function assignTheft(req, res) {
+async function assignTheft(user) {
   try {
     const theft = await TheftModel.findOne({ status: "pending" });
-    const officer = res.locals.officer || res.locals.user;
+    const officer = user;
 
     if (theft) {
       theft.status = "assigned";
       theft.assignation = officer.id;
       officer.caseAssigned = theft.id;
+
       await officer.save();
       await theft.save();
     }
-
-    res.status(200).json(officer);
   } catch (err) {
-    console.log(err);
-    res.status(500).send(`Error assigning Theft: ${err}`);
+    throw new Error(`Error assigning Theft: ${err}`);
   }
 }
 

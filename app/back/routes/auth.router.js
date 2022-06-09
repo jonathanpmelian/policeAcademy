@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { check } = require("../utils/auth");
+const { check } = require("../middlewares/auth");
 const { signup, login } = require("../controllers/auth.controller");
 const { assignTheft } = require("../utils/assignment");
 

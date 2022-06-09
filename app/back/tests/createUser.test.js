@@ -29,6 +29,7 @@ describe("Errors thrown when", () => {
       "jonathan@policeacademy.com",
       "1234"
     );
+
     await expect(
       createUser("Leo", "Messi", "jonathan@policeacademy.com", "1234")
     ).rejects.toThrow();

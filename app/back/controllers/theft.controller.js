@@ -1,6 +1,6 @@
 const TheftModel = require("../models/theft.model");
 const UserModel = require("../models/user.model");
-const { setAddress } = require("../utils/googleMapsApi");
+const { setAddress } = require("../services/googleMapsApi");
 
 async function addTheft(req, res, next) {
   try {

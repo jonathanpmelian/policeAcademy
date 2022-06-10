@@ -1,7 +1,6 @@
-const supertest = require("supertest");
-const UserModel = require("../models/user.model");
-const { createUser } = require("../utils/auth");
+const { signup } = require("../controllers/auth.controller");
 const db = require("./db");
+const supertest = require("supertest");
 let api = null;
 let serverTest = null;
 

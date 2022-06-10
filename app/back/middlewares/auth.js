@@ -1,9 +1,15 @@
-const { tokenVerification } = require("../utils/auth");
+const { findOneUser } = require("../services/crud");
+const { tokenVerification } = require("../services/token");
 
 async function check(req, res, next) {
   try {
     if (req.headers.token) {
-      tokenVerification(req, res, next);
+      const { email } = tokenVerification(req.headers.token);
+      const user = await findOneUser({ email });
+      if (!user) return res.status(400).send("Token not valid");
+
+      res.locals.user = user;
+      next();
     } else {
       next();
     }
@@ -16,7 +22,12 @@ async function check(req, res, next) {
 async function checkAuth(req, res, next) {
   try {
     if (!req.headers.token) return res.status(401).send("User not logged in");
-    tokenVerification(req, res, next);
+    const { email } = tokenVerification(req.headers.token);
+    const user = await findOneUser({ email });
+    if (!user) return res.status(400).send("Token not valid");
+
+    res.locals.user = user;
+    next();
   } catch (err) {
     console.log(err);
     res.status(500).send(`Error authorizing user: ${err}`);

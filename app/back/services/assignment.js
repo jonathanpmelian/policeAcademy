@@ -11,8 +11,8 @@ async function assignTheft(user) {
       theft.assignation = officer.id;
       officer.caseAssigned = theft.id;
 
-      await officer.save();
       await theft.save();
+      await officer.save();
     }
   } catch (err) {
     throw new Error(`Error assigning Theft: ${err}`);
@@ -41,4 +41,34 @@ async function assignOfficer(req, res) {
   }
 }
 
-module.exports = { assignTheft, assignOfficer };
+async function assignDepartmentToOfficer(department, loggedUser) {
+  try {
+    const departmentFinded = await DepartmentModel.findById(
+      department || loggedUser.department._id.toString()
+    );
+
+    department = departmentFinded.id;
+
+    return department;
+  } catch (err) {
+    throw new Error(`Error assigning departmet: ${err}`);
+  }
+}
+
+async function assignOfficerToDepartment(newUser) {
+  try {
+    const department = await DepartmentModel.findById(newUser.department);
+    department.officers.push(newUser);
+
+    await department.save();
+  } catch (err) {
+    throw new Error(`Error assigning officer to department: ${err}`);
+  }
+}
+
+module.exports = {
+  assignTheft,
+  assignOfficer,
+  assignDepartmentToOfficer,
+  assignOfficerToDepartment,
+};

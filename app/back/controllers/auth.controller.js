@@ -1,14 +1,14 @@
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/user.model");
 const DepartmentModel = require("../models/department.model");
+const { hashPassword, comparePassword } = require("../services/password");
+const { tokenSign } = require("../services/token");
+const { createUser, findOneUser } = require("../services/crud");
 const {
-  hashPassword,
-  comparePassword,
-  createUser,
+  assignTheft,
   assignDepartmentToOfficer,
   assignOfficerToDepartment,
-} = require("../utils/auth");
-const { assignTheft } = require("../utils/assignment");
+} = require("../services/assignment");
 
 async function signup(req, res) {
   let { name, surname, email, password, role, department } = req.body;
@@ -27,14 +27,14 @@ async function signup(req, res) {
     if (role === "officer")
       department = await assignDepartmentToOfficer(department, loggedUser);
 
-    const newUser = await createUser(
+    const newUser = await createUser({
       name,
       surname,
       email,
       password,
       role,
-      department
-    );
+      department,
+    });
 
     if (newUser.role === "officer") {
       await assignOfficerToDepartment(newUser);
@@ -42,7 +42,7 @@ async function signup(req, res) {
     }
 
     if (newUser.role === "user") {
-      const token = jwt.sign({ email: newUser.email }, process.env.SECRET);
+      const token = tokenSign({ email });
 
       return res.status(200).json({ token });
     }
@@ -55,11 +55,19 @@ async function signup(req, res) {
 }
 
 async function login(req, res) {
+  const email = req.body.email;
+  const bodyPassword = req.body.password;
   try {
-    const user = await UserModel.findOne({ email: req.body.email });
-    if (!user) return res.status(500).send(`Email or password not valid`);
+    const user = await findOneUser({ email });
+    if (!user) return res.status(400).send(`Email or password not valid`);
 
-    return comparePassword(req, res, user);
+    const comparePass = await comparePassword(bodyPassword, user.password);
+    if (!comparePass)
+      return res.status(400).send(`Email or password not valid`);
+
+    const token = tokenSign({ email });
+
+    res.status(200).json({ token });
   } catch (err) {
     console.log(err);
     res.status(500).send(`Error login user: ${err}`);

@@ -7,7 +7,7 @@ const {
   getOneTheft,
   theftResolved,
 } = require("../controllers/theft.controller");
-const { assignOfficer, assignTheft } = require("../utils/assignment");
+const { assignOfficer, assignTheft } = require("../services/assignment");
 
 router.post("/", checkAuth, checkUser, addTheft, assignOfficer);
 router.get("/", checkAuth, getAllThefts);
